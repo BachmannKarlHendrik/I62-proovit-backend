@@ -1,6 +1,7 @@
 package com.example.proovitoo.entities;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.*;
 
@@ -14,6 +15,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Event {
     @Id
+    @GeneratedValue(generator = "uuid2")
     private UUID id;
     private String name;
     private String nameEst;

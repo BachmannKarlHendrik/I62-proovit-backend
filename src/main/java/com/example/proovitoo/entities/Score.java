@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.sql.Timestamp;
+import java.time.ZonedDateTime;
 import java.util.UUID;
 
 @Entity
@@ -15,6 +16,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Score {
     @Id
+    @GeneratedValue(generator = "uuid2")
     private UUID id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="athlete_id", nullable=false)
@@ -23,7 +25,13 @@ public class Score {
     @ManyToOne
     @JoinColumn(name="event_id", nullable=false)
     private Event event;
-    private Timestamp timeCreated;
+    @Column(insertable = false, updatable = false)
+    private ZonedDateTime timeCreated;
     private Double result;
     private Integer resultMinutes;
+
+    public Score(Athlete athlete, Event event) {
+        this.athlete = athlete;
+        this.event = event;
+    }
 }
