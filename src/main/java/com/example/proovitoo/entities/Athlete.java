@@ -40,9 +40,11 @@ public class Athlete {
                 return;
             }
             //Kõik tulemused ümardatakse alla (int) castimisel. Allikas: https://en.wikipedia.org/wiki/Decathlon
-            if (score.getEvent().getUnit().equalsIgnoreCase("m")) {
+            if (score.getEvent().getUnit().equalsIgnoreCase("m") || score.getEvent().getUnit().equalsIgnoreCase("cm")) {
+                //Kui tulemus on väiksem kui B koefitsient, tagastab Math.pow NaN ning punktidele ei liideta mitte miskit ning võistleja saab soorituse eest 0 punkti.
                 points += (int) (score.getEvent().getACoefficient() * Math.pow((score.getResult() - score.getEvent().getBCoefficient()), score.getEvent().getCCoefficient()));
             } else if (score.getEvent().getUnit().equalsIgnoreCase("s")) {
+                //Kui tulemus on suurem kui B koefitsient, tagastab Math.pow Nan ning punktidele ei liideta mitte miskit ning võitleja saab soorituse eest 0 punkti.
                 points += (int) (score.getEvent().getACoefficient() * Math.pow((score.getEvent().getBCoefficient() - score.getResult()), score.getEvent().getCCoefficient()));
             }
         });
