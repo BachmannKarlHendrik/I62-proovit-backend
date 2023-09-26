@@ -31,4 +31,20 @@ public class Athlete {
     private Integer points;
     @OneToMany(mappedBy = "athlete", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Score> scores = new ArrayList<>();
+
+    public void recalculatePoints() {
+        points = 0;
+        scores.forEach(score -> {
+            //Nullidega tähistatakse skoorid, mis on veel mõõtmata.
+            if(score.getResult() == null) {
+                return;
+            }
+            //Kõik tulemused ümardatakse alla (int) castimisel. Allikas: https://en.wikipedia.org/wiki/Decathlon
+            if (score.getEvent().getUnit().equalsIgnoreCase("m")) {
+                points += (int) (score.getEvent().getACoefficient() * Math.pow((score.getResult() - score.getEvent().getBCoefficient()), score.getEvent().getCCoefficient()));
+            } else if (score.getEvent().getUnit().equalsIgnoreCase("s")) {
+                points += (int) (score.getEvent().getACoefficient() * Math.pow((score.getEvent().getBCoefficient() - score.getResult()), score.getEvent().getCCoefficient()));
+            }
+        });
+    }
 }
