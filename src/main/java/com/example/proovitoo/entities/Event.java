@@ -22,7 +22,6 @@ public class Event {
     private Double aCoefficient;
     private Double bCoefficient;
     private Double cCoefficient;
-    private Boolean hasMinutes;
     private String unit;
     private Boolean isWomen;
     private Boolean isMen;

@@ -28,7 +28,6 @@ public class Score {
     @Column(insertable = false, updatable = false)
     private ZonedDateTime timeCreated;
     private Double result;
-    private Integer resultMinutes;
 
     public Score(Athlete athlete, Event event) {
         this.athlete = athlete;
