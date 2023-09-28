@@ -62,7 +62,7 @@ public class AthletesRestController {
         } else {
             eventsRepository.findByIsWomenTrue().forEach(event -> athlete.getScores().add(new Score(athlete, event)));
         }
-
+        athlete.setPoints(0);
         athletesRepository.saveAndFlush(athlete);
 
         return ResponseEntity.ok(athlete);
