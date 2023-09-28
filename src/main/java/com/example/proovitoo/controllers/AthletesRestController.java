@@ -88,4 +88,14 @@ public class AthletesRestController {
                 PageRequest.of(pageNr - 1, 10));
         return ResponseEntity.ok(AthletePageDto.createFromPage(page));
     }
+
+    @GetMapping("athletes/top3Women")
+    public ResponseEntity<?> top3Women() {
+        return ResponseEntity.ok(athletesRepository.findTop3ByIsMaleFalseOrderByPointsDesc());
+    }
+
+    @GetMapping("athletes/top3Men")
+    public ResponseEntity<?> top3Men() {
+        return ResponseEntity.ok(athletesRepository.findTop3ByIsMaleTrueOrderByPointsDesc());
+    }
 }
