@@ -1,6 +1,7 @@
 package com.example.proovitoo.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,6 +22,7 @@ public class Score {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="athlete_id", nullable=false)
     @JsonBackReference
+    @ToString.Exclude
     private Athlete athlete;
     @ManyToOne
     @JoinColumn(name="event_id", nullable=false)

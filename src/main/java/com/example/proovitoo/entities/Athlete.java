@@ -1,6 +1,7 @@
 package com.example.proovitoo.entities;
 
 import com.example.proovitoo.dtos.AthletePostDto;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -20,6 +21,7 @@ import java.util.UUID;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Athlete {
     @Id
     @GeneratedValue(generator = "uuid2")
