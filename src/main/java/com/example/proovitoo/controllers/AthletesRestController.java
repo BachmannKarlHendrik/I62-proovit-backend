@@ -82,10 +82,7 @@ public class AthletesRestController {
         if (pageNr <= 0) {
             return new ResponseEntity<>("Pagination starts at 1", HttpStatus.BAD_REQUEST);
         }
-        List<UUID> athleteIds = scoresRepository.findAllByResultIsNull().stream().map(score -> score.getAthlete().getId())
-                .distinct().collect(Collectors.toList());
-        Page<Athlete> page = athletesRepository.findAllByIdInOrderByTimeCreatedDesc(athleteIds,
-                PageRequest.of(pageNr - 1, 10));
+        Page<Athlete> page = scoresRepository.findAllAthletesByResultIsNullOrderByTimeCreatedDesc(PageRequest.of(pageNr-1,10));
         return ResponseEntity.ok(AthletePageDto.createFromPage(page));
     }
 
