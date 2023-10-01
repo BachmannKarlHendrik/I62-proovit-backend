@@ -64,7 +64,6 @@ public class ScoresRestController {
             //Kui kõik testid on läbitud, lisatakse muudetud skoor muudetavate listi.
             score.setResult(scorePutDto.getResult());
             editedScores.add(score);
-            System.out.println(score.getEvent().getNameEst() + ": " + score.getResult());
         }
 
         editedScores.get(0).getAthlete().recalculatePoints();
