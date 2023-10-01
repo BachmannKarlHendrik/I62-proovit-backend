@@ -12,7 +12,6 @@ import java.util.UUID;
 public interface AthletesRepository extends JpaRepository<Athlete, UUID> {
     public List<Athlete> findAllByOrderByTimeCreatedDesc();
     public Page<Athlete> findAllByOrderByTimeCreatedDesc(Pageable pageable);
-    public Page<Athlete> findAllByIdInOrderByTimeCreatedDesc(List<UUID> ids, Pageable pageable);
 
     //Peab defineerima eraldi query. Muidu toimub top 3 enne kui order by.
     @Query("select a from Athlete a where a.isMale = false order by a.points desc limit 3")
