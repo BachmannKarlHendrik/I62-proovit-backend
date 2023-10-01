@@ -5,8 +5,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.GenerationTime;
 import org.hibernate.generator.EventType;
+import org.springframework.core.annotation.Order;
 
 import javax.swing.event.DocumentEvent;
 import java.sql.Timestamp;
@@ -32,6 +34,7 @@ public class Athlete {
     private Boolean isMale;
     private Integer points;
     @OneToMany(mappedBy = "athlete", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OrderBy("event_id")
     private List<Score> scores = new ArrayList<>();
 
     public void recalculatePoints() {

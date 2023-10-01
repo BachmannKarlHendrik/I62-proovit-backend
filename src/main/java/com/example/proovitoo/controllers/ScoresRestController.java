@@ -46,7 +46,7 @@ public class ScoresRestController {
 
         for (ScorePutDto scorePutDto : scoresList) {
             Optional<Score> optional = scoresRepository.findById(scorePutDto.getId());
-            if(scorePutDto.getResult() < 0) {
+            if(scorePutDto.getResult() != null && scorePutDto.getResult() < 0) {
                 return new ResponseEntity<>(scorePutDto + " result is smaller than 0.",HttpStatus.BAD_REQUEST);
             }
             if(optional.isEmpty()) {
