@@ -25,4 +25,5 @@ public class Event {
     private String unit;
     private Boolean isWomen;
     private Boolean isMen;
+    private Boolean hasMinutes;
 }
