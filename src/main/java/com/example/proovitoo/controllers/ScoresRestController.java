@@ -20,11 +20,11 @@ public class ScoresRestController {
     @Autowired
     private ScoresRepository scoresRepository;
 
-     //Kasutades eraldi PutDTO-d välistatakse võimalus, et pahatahtlikult muudetakse athleteId või eventId ära.
+    //Kasutades eraldi PutDTO-d välistatakse võimalus, et pahatahtlikult muudetakse athleteId või eventId ära.
     @PutMapping("score")
     public ResponseEntity<?> putScore(@RequestBody ScorePutDto scoreDto) {
         Optional<Score> optional = scoresRepository.findById(scoreDto.getId());
-        if(optional.isEmpty()) {
+        if (optional.isEmpty()) {
             return new ResponseEntity<>("Such score does not exist.", HttpStatus.NOT_FOUND);
         }
         Score score = optional.get();
@@ -37,7 +37,7 @@ public class ScoresRestController {
     //Kasutades eraldi PutDTO-d välistatakse võimalus, et pahatahtlikult muudetakse athleteId või eventId ära.
     @PutMapping("scores")
     public ResponseEntity<?> putScores(@RequestBody List<ScorePutDto> scoresList) {
-        if(scoresList.isEmpty()) {
+        if (scoresList.isEmpty()) {
             return ResponseEntity.ok(scoresList);
         }
 
@@ -46,25 +46,25 @@ public class ScoresRestController {
 
         for (ScorePutDto scorePutDto : scoresList) {
             Optional<Score> optional = scoresRepository.findById(scorePutDto.getId());
-            if(scorePutDto.getResult() != null && scorePutDto.getResult() < 0) {
-                return new ResponseEntity<>(scorePutDto + " result is smaller than 0.",HttpStatus.BAD_REQUEST);
+            if (scorePutDto.getResult() != null && scorePutDto.getResult() < 0) {
+                return new ResponseEntity<>(scorePutDto + " result is smaller than 0.", HttpStatus.BAD_REQUEST);
             }
-            if(optional.isEmpty()) {
+            if (optional.isEmpty()) {
                 return new ResponseEntity<>(scorePutDto + " no such score found.", HttpStatus.NOT_FOUND);
             }
             Score score = optional.get();
-            if(athlete == null) {
+            if (athlete == null) {
                 athlete = optional.get().getAthlete();
             }
             //Välistatakse, et kogemata on mõne muu võistleja tulemused samuti üle kirjutamisele sattunud.
-            if(!athlete.getId().equals(score.getAthlete().getId())) {
-                return new ResponseEntity<>("All scores must have the same athlete!",HttpStatus.BAD_REQUEST);
+            if (!athlete.getId().equals(score.getAthlete().getId())) {
+                return new ResponseEntity<>("All scores must have the same athlete!", HttpStatus.BAD_REQUEST);
             }
 
             //Kui kõik testid on läbitud, lisatakse muudetud skoor muudetavate listi.
             score.setResult(scorePutDto.getResult());
             editedScores.add(score);
-            System.out.println(score.getEvent().getNameEst()+": "+score.getResult());
+            System.out.println(score.getEvent().getNameEst() + ": " + score.getResult());
         }
 
         editedScores.get(0).getAthlete().recalculatePoints();
